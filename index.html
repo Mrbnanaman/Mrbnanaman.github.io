@@ -1,1 +1,220 @@
 i like cheese 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+        #game-board {
+            width: 600px; /* Increased width of the board */
+            height: 600px; /* Increased height of the board */
+            background-color: #000;
+            position: relative;
+            border: 2px solid #fff;
+        }
+        .snake {
+            position: absolute;
+            width: 30px; /* Adjusted snake size to match larger grid */
+            height: 30px; /* Adjusted snake size */
+            background-color: #00ff00;
+            border-radius: 4px;
+            transition: transform 0.1s linear; /* Smooth transition for snake movement */
+        }
+        .food {
+            position: absolute;
+            width: 30px; /* Adjusted food size */
+            height: 30px; /* Adjusted food size */
+            background-color: red;
+            border-radius: 50%;
+            animation: foodPop 0.3s ease; /* Food popping effect */
+        }
+        #score {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            font-size: 20px;
+        }
+        /* Animation for food spawn */
+        @keyframes foodPop {
+            0% {
+                transform: scale(0);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Create grid lines for the entire game board */
+        .grid-line {
+            position: absolute;
+            background-color: #444; /* Color of the grid lines */
+        }
+
+        /* Horizontal grid lines */
+        .horizontal-line {
+            width: 100%;
+            height: 1px;
+        }
+
+        /* Vertical grid lines */
+        .vertical-line {
+            height: 100%;
+            width: 1px;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="game-board">
+        <div id="score">Score: 0</div>
+    </div>
+
+    <script>
+        const board = document.getElementById('game-board');
+        const scoreDisplay = document.getElementById('score');
+        const gridSize = 20;  // Number of grid cells per side (still 20, but adjusting cell size)
+        const boardSize = 600; // Increased board size (600px by 600px)
+        const cellSize = boardSize / gridSize; // Adjusted cell size based on larger board
+        let snake = [{ x: 5, y: 5 }];
+        let direction = { x: 1, y: 0 };
+        let food = { x: 10, y: 10 };
+        let score = 0;
+        let gameInterval;
+
+        // Create the grid lines for the entire game board
+        function createGridLines() {
+            // Create horizontal grid lines
+            for (let i = 0; i <= gridSize; i++) {
+                const line = document.createElement('div');
+                line.classList.add('grid-line', 'horizontal-line');
+                line.style.top = `${i * cellSize}px`;
+                board.appendChild(line);
+            }
+
+            // Create vertical grid lines
+            for (let i = 0; i <= gridSize; i++) {
+                const line = document.createElement('div');
+                line.classList.add('grid-line', 'vertical-line');
+                line.style.left = `${i * cellSize}px`;
+                board.appendChild(line);
+            }
+        }
+
+        // Initialize the game
+        function startGame() {
+            snake = [{ x: 5, y: 5 }];
+            direction = { x: 1, y: 0 };
+            score = 0;
+            food = generateFood();
+            scoreDisplay.textContent = `Score: ${score}`;
+            if (gameInterval) clearInterval(gameInterval);
+            gameInterval = setInterval(updateGame, 150); // Slower speed here (150ms interval)
+        }
+
+        // Update game state
+        function updateGame() {
+            const head = { ...snake[0] };
+            head.x += direction.x;
+            head.y += direction.y;
+
+            // Wrap around logic for walls
+            if (head.x < 0) head.x = gridSize - 1; // Left wall
+            if (head.x >= gridSize) head.x = 0; // Right wall
+            if (head.y < 0) head.y = gridSize - 1; // Top wall
+            if (head.y >= gridSize) head.y = 0; // Bottom wall
+
+            if (isSnakeCollision(head)) {
+                gameOver();
+                return;
+            }
+
+            snake.unshift(head);
+
+            // Check if snake eats food
+            if (head.x === food.x && head.y === food.y) {
+                score += 10;
+                food = generateFood();
+                scoreDisplay.textContent = `Score: ${score}`;
+            } else {
+                snake.pop();
+            }
+
+            drawGame();
+        }
+
+        // Draw the game board (snake and food)
+        function drawGame() {
+            board.innerHTML = `<div id="score">Score: ${score}</div>`;
+
+            // Draw snake with smooth transitions
+            snake.forEach(segment => {
+                const snakePart = document.createElement('div');
+                snakePart.style.left = `${segment.x * cellSize}px`;
+                snakePart.style.top = `${segment.y * cellSize}px`;
+                snakePart.classList.add('snake');
+                board.appendChild(snakePart);
+            });
+
+            // Draw food
+            const foodElement = document.createElement('div');
+            foodElement.style.left = `${food.x * cellSize}px`;
+            foodElement.style.top = `${food.y * cellSize}px`;
+            foodElement.classList.add('food');
+            board.appendChild(foodElement);
+        }
+
+        // Generate new food position
+        function generateFood() {
+            let foodPosition;
+            while (true) {
+                foodPosition = {
+                    x: Math.floor(Math.random() * gridSize),
+                    y: Math.floor(Math.random() * gridSize)
+                };
+                if (!isSnakeCollision(foodPosition)) break;
+            }
+            return foodPosition;
+        }
+
+        // Check if the snake collides with itself
+        function isSnakeCollision(position) {
+            return snake.some(segment => segment.x === position.x && segment.y === position.y);
+        }
+
+        // Handle key press events for controlling the snake
+        function handleKeyPress(event) {
+            if (event.key === 'ArrowUp' && direction.y === 0) direction = { x: 0, y: -1 };
+            if (event.key === 'ArrowDown' && direction.y === 0) direction = { x: 0, y: 1 };
+            if (event.key === 'ArrowLeft' && direction.x === 0) direction = { x: -1, y: 0 };
+            if (event.key === 'ArrowRight' && direction.x === 0) direction = { x: 1, y: 0 };
+        }
+
+        // Game over function
+        function gameOver() {
+            clearInterval(gameInterval);
+            alert(`Game Over! Final Score: ${score}`);
+            startGame();
+        }
+
+        // Start the game when the page loads
+        startGame();
+
+        // Create the grid lines
+        createGridLines();
+
+        // Add event listener for keypresses
+        document.addEventListener('keydown', handleKeyPress);
+    </script>
+</body>
+</html>
