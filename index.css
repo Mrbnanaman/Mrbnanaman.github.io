@@ -1,6 +1,8 @@
 #navbar{
-background:orangered
+background:orangered;
+display:flex;
 }
 #main{
 background: orange;
+display:flex;
 }
