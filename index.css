@@ -5,4 +5,5 @@ display:flex;
 #main{
 background: orange;
 display:flex;
+height:100%
 }
