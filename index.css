@@ -3,6 +3,7 @@ background:orangered;
 display:flex;
 justify-content: flex-end;
 gap:2em;
+padding-right: 2em;
 }
 #main{
 background: orange;
