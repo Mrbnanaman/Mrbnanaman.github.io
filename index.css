@@ -1,24 +1,32 @@
+body{
+    background-image: repeating-radial-gradient( #00f , #0ff 10% , #fff 15%);
+}
+
+
 #navbar{
-background:orangered;
+
 display:flex;
 justify-content: flex-end;
 gap:2em;
 padding-right: 2em;
 }
 #main{
-background: orange;
+
 display:flex;
 height:100%
 }
 .nav-link{
-    background: green;
+
     
 }
 #left-col{
-background: yellow;
 width: 50%;
 }
 #right-col{
-    background: blue;
+
     width: 50%;
+}
+
+#hero{
+ width: 32em;
 }
