@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Egg Shooter Mini</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Egg Fighter Game</title>
+
 <style>
     body {
         margin: 0;
         overflow: hidden;
-        background: #87CEEB;
-        font-family: Arial, sans-serif;
+        background: #e7e7e7;
     }
-
-    #gameCanvas {
-        background: #eef;
+    canvas {
         display: block;
+        background: #d0d0d0;
         margin: 0 auto;
     }
 </style>
@@ -25,124 +26,71 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// Player (egg)
+// PLAYER (the egg!)
 let player = {
-    x: 450,
-    y: 300,
-    size: 30,
+    x: canvas.width / 2,
+    y: canvas.height / 2,
+    w: 35,
+    h: 45,
     speed: 5
 };
 
-// Bullets
 let bullets = [];
 
-// Enemies
-let enemies = [];
-function spawnEnemy() {
-    enemies.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        size: 25,
-        speed: 1.5
+// Draw player egg
+function drawPlayer() {
+    ctx.fillStyle = "#f5e663"; // egg yellow
+    ctx.beginPath();
+    ctx.ellipse(player.x, player.y, player.w, player.h, 0, 0, Math.PI * 2);
+    ctx.fill();
+}
+
+// Draw bullets
+function drawBullets() {
+    ctx.fillStyle = "red";
+    bullets.forEach(b => {
+        ctx.beginPath();
+        ctx.arc(b.x, b.y, 6, 0, Math.PI * 2);
+        ctx.fill();
     });
 }
-setInterval(spawnEnemy, 2000);
+
+// Update everything
+function update() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawPlayer();
+    drawBullets();
+
+    // Move bullets
+    bullets.forEach(b => b.y -= 10);
+
+    // Remove bullets that leave the screen
+    bullets = bullets.filter(b => b.y > -20);
+}
 
 // Controls
-let keys = {};
-document.addEventListener("keydown", (e) => keys[e.key] = true);
-document.addEventListener("keyup", (e) => keys[e.key] = false);
+document.addEventListener("keydown", e => {
+    if (e.key === "ArrowUp") player.y -= player.speed;
+    if (e.key === "ArrowDown") player.y += player.speed;
+    if (e.key === "ArrowLeft") player.x -= player.speed;
+    if (e.key === "ArrowRight") player.x += player.speed;
 
-// Mouse shooting
-document.addEventListener("click", (e) => {
-    let angle = Math.atan2(
-        e.clientY - player.y,
-        e.clientX - player.x
-    );
-
-    bullets.push({
-        x: player.x,
-        y: player.y,
-        dx: Math.cos(angle) * 8,
-        dy: Math.sin(angle) * 8,
-        size: 5
-    });
-});
-
-// Update loop
-function update() {
-    // Movement
-    if (keys["w"]) player.y -= player.speed;
-    if (keys["s"]) player.y += player.speed;
-    if (keys["a"]) player.x -= player.speed;
-    if (keys["d"]) player.x += player.speed;
-
-    // Bullets move
-    bullets.forEach((b, index) => {
-        b.x += b.dx;
-        b.y += b.dy;
-
-        // Remove bullets off-screen
-        if (b.x < 0 || b.x > canvas.width || b.y < 0 || b.y > canvas.height) {
-            bullets.splice(index, 1);
-        }
-    });
-
-    // Enemies follow player
-    enemies.forEach((e) => {
-        let angle = Math.atan2(player.y - e.y, player.x - e.x);
-        e.x += Math.cos(angle) * e.speed;
-        e.y += Math.sin(angle) * e.speed;
-    });
-
-    // Collision detection (bullets → enemies)
-    bullets.forEach((b, bi) => {
-        enemies.forEach((e, ei) => {
-            let dist = Math.hypot(b.x - e.x, b.y - e.y);
-            if (dist < e.size) {
-                enemies.splice(ei, 1);
-                bullets.splice(bi, 1);
-            }
+    // Shoot
+    if (e.key === " ") {
+        bullets.push({
+            x: player.x,
+            y: player.y - player.h
         });
-    });
-}
-
-// Draw loop
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Draw player egg
-    ctx.fillStyle = "white";
-    ctx.beginPath();
-    ctx.ellipse(player.x, player.y, player.size, player.size * 1.2, 0, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.stroke();
-
-    // Draw bullets
-    bullets.forEach((b) => {
-        ctx.fillStyle = "yellow";
-        ctx.beginPath();
-        ctx.arc(b.x, b.y, b.size, 0, Math.PI * 2);
-        ctx.fill();
-    });
-
-    // Draw enemies (red eggs)
-    enemies.forEach((e) => {
-        ctx.fillStyle = "red";
-        ctx.beginPath();
-        ctx.ellipse(e.x, e.y, e.size, e.size * 1.2, 0, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.stroke();
-    });
-}
+    }
+});
 
 function gameLoop() {
     update();
-    draw();
     requestAnimationFrame(gameLoop);
 }
 
 gameLoop();
 </script>
+
 </body>
 </html>
