@@ -19,6 +19,7 @@ function add3(i){
 
     
 }
+let gameRunning=true;
 let b=add3(8888888888);
 console.log(b)
 let player={
@@ -31,11 +32,15 @@ let baddies=[];
 ctx.fillStyle="#0ff"
 ctx.fillRect(player.x,player.y,20,20)
 function upp(e){
-    console.log(e)
+  
     player.x=e.offsetX-10
     player.y=e.offsetY-10
     drawGame()
-  
+ let results= checkCollision(player,baddies[0])
+ if (results){
+    gameRunning=false
+ } 
+ console.log(results)
 }
 function drawGame (){
 
@@ -43,6 +48,9 @@ ctx.fillStyle="#f00"
 ctx.fillRect(0,0,canvas.width,canvas.height) // background cheese
 for(let i=0;i<baddies.length;i++){
 let obj=baddies[i]
+if(gameRunning===false){
+    return;
+}
     ctx.fillStyle="#00f";
     ctx.fillRect(obj.x,obj.y,obj.width,obj.height)
 }
@@ -62,6 +70,13 @@ function addbaddie(x,y){
 }
 
 canvas.addEventListener("mousemove",upp)
+window.addEventListener("keydown",keydown)
+function keydown(e){
+    if(e.key===" "
+        ||e.key==="Enter"){
+            gameRunning=true
+    }
+}
 
 
 let ar=[8,3,7];
@@ -69,6 +84,8 @@ console.log(ar[0])
 ar[0]="banana"
 console.log(ar[0])
 ar.push(21);
+
+
 
 
 ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);ar.push(21);
@@ -85,12 +102,13 @@ function checkCollision (a,b) {
     if(a.x<b.x+b.width&&
         b.x<a.x+a.width&&
         a.y<b.y+b.height&&
-        b.y<a.y+a.height
-
-    ){
+        b.y<a.y+a.height){
         return true;
     }else{
         return false;
     }
 }
+
+drawGame()
+
 
