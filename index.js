@@ -5,7 +5,7 @@ let secret = document.getElementsByClassName("secretlink")[0];
 let secretcanter = 0;
 
 secret.addEventListener('mouseenter',function() {
-    if (secretcanter <100){
+    if (secretcanter <10){
         secret.style.top= Math.random() * 100 + "%";
         secret.style.right= Math.random() * 100 + "%";
         secretcanter++;

@@ -58,3 +58,12 @@ top: 0.5em;
 right: 28em;
 
 }
+.game-container{
+background:#fff;
+justify-self: center;
+box-shadow: 0.3em 0.3em 1em 0;
+border-radius: 0.5em;
+padding:1em;
+text-align: center;
+
+}
